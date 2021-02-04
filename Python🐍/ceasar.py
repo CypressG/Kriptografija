@@ -20,16 +20,23 @@ Leidžia atšifruoti tekstą su pasirinktu(žinomu) raktu
     pvz:
         print(kripto.decryption("Mącąš Qąšąųmį 6478", 35))
 Brute Force
-Nežinant rakto išbando raktus nuo JŪSŲ_PASIRINKTOS_PRADŽIOS iki JŪSŲ_PASIRINKTOS_PABAIGOS bei nurodyti turite žingsnį.
+Nežinant rakto išbando raktus nuo JŪSŲ_PASIRINKTOS_PRADŽIOS iki JŪSŲ_PASIRINKTOS_PABAIGOS
+su nurodytu žingsniu ir viską įrašo į failą.
 pvz:
     print(kripto.brute_force("Mącąš Qąšąųmį 6478",0,50,1))
 '''
 ABC_UPPER = 'AĄBCČDEĘĖFGHIĮJKLMNOPQRŠTUŲŪVWXYZŽ'
 ABC_DOWN = 'aąbcčdeęėfghiįjklmnopqrsštuųūvwxyzž'
+SYMBOLS = "!@#$%^&*()-_+/.,<>~ ᴪ𝞐𝒚β"
+
 KEY_LENGTH = len(ABC_UPPER)
+SYMBOLS_LENGTH = len(SYMBOLS)
+
+
 class Caesar:
     def __init__(self):
         pass
+
     def encryption(self, text, key):
         string = ''
         for x in text:
@@ -42,12 +49,13 @@ class Caesar:
                     string += ABC_DOWN[index + key % KEY_LENGTH]
             elif x.isdigit():
                 number = (int(x) + key) % 10
-                string+= str(number)
+                string += str(number)
             else:
-                string+=x
+                index = SYMBOLS.find(x)
+                string += SYMBOLS[(index + key) % SYMBOLS_LENGTH]
         return string
 
-    def decryption(self,text,key):
+    def decryption(self, text, key):
         string = ''
         for x in text:
             if x in ABC_UPPER or x in ABC_DOWN:
@@ -59,19 +67,21 @@ class Caesar:
                     string += ABC_DOWN[(index - key) % KEY_LENGTH]
             elif x.isdigit():
                 number = (int(x) - key) % 10
-                string+= str(number)
+                string += str(number)
             else:
-                string+=x
+                index = SYMBOLS.find(x)
+                string += SYMBOLS[(index - key) % SYMBOLS_LENGTH]
         return string
 
-    def brute_force(self,text,iteration_start,iteration_end, step):
+    def brute_force(self, text, iteration_start, iteration_end, step):
         iterations = iteration_end - iteration_start
-        with open(f"brute_force_{iterations}.txt","w") as file:
+        with open(f"brute_force_{iterations}.txt", "w") as file:
             for x in range(iteration_start, iteration_end, step):
-                file.write(f"{x} - " + self.decryption(text,x) + "\n")
+                file.write(f"{x} - " + self.decryption(text, x) + "\n")
         return True
 
+
 kripto = Caesar()
-print(kripto.encryption("Labas Pasauli 1923", 35))
-print(kripto.decryption("Mącąš Qąšąųmį 6478", 35))
-print(kripto.brute_force("Mącąš Qąšąųmį 6478",0,50,1))
+#print(kripto.encryption("Labas𝞐Pasauli 1923-", 3))
+#print(kripto.decryption("Ocdcu!Šcucvok𝒚4256/", 3))
+print(kripto.brute_force("Ocdcu!Šcucvok𝒚4256/", 0, 50, 1))
