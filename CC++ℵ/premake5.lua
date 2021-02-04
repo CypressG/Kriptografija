@@ -11,6 +11,9 @@ configurations { "Debug", "Release" }
     
     outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+    IncludeDir = {}
+    IncludeDir["fmt"] = "Vendor/fmt/include"
+
 project "CeaserCypherC++"
             location "CeaserCypherCPP"
             kind "ConsoleApp"
@@ -23,9 +26,9 @@ project "CeaserCypherC++"
 
             files
             {
-                "%{prj.name}/src/**.h",
-                "%{prj.name}/src/**.hpp",
-                "%{prj.name}/src/**.cpp"
+                "%{prj.name}/src/*.h",
+                "%{prj.name}/src/*.hpp",
+                "%{prj.name}/src/*.cpp",
             }
 
             defines
@@ -35,7 +38,8 @@ project "CeaserCypherC++"
 
             includedirs
             {
-                "%{prj.name}/src"             
+                "%{prj.name}/src/**",
+                "%{IncludeDir.fmt}"             
             }
 
             filter "configurations:Debug"
