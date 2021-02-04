@@ -5,7 +5,7 @@ GITHUB:
 Bene vienas paprasčiausių kriptografijos koduočių, kurį sukūrė Gajus Julius Cezaris
 
 Kaip čia viskas veikia:
-- Inicijuojat klase (pvz kripto = Caesar())
+- Inicijuojat klase (pvz kripto = Caesar("Labas Pasauli"))
 - Pasirenkat metoda ir duodat metodui reikiamus parametrus
 
 Encryption metodas
@@ -36,8 +36,9 @@ SYMBOLS_LENGTH = len(SYMBOLS)
 
 
 class Caesar:
-    def __init__(self, text):
-        self.encrypted_text = text
+    def __init__(self, *args):
+        if len(args)>0:
+            self.encrypted_text = args[0]
         self.decrypted_text = ''
         pass
 
@@ -97,8 +98,8 @@ class Caesar:
         return False
 
 
-kryptos = Caesar(text="Kipras")
-for x in range(3):
-    print(kryptos.encryption(text=kryptos.encrypted_text, key=3))
-
-print(kryptos.brute_force_chain(text="Tqvxfy", key=3, iterations=10))
+kryptos = Caesar()
+#for x in range(3):
+#    print(kryptos.encryption(text=kryptos.encrypted_text, key=3))
+print(kryptos.encryption("Kipras",0))
+#print(kryptos.brute_force_chain(text="Tqvxfy", key=3, iterations=10))
