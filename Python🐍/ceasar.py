@@ -25,6 +25,9 @@ su nurodytu žingsniu ir viską įrašo į failą.
 pvz:
     print(kripto.brute_force("Mącąš Qąšąųmį 6478",0,50,1))
 '''
+
+
+
 ABC_UPPER = 'AĄBCČDEĘĖFGHIĮJKLMNOPQRŠTUŲŪVWXYZŽ'
 ABC_DOWN = 'aąbcčdeęėfghiįjklmnopqrsštuųūvwxyzž'
 SYMBOLS = "!@#$%^&*()-_+/.,<>~ ᴪ𝞐𝒚β"
@@ -78,10 +81,5 @@ class Caesar:
         with open(f"brute_force_{iterations}.txt", "w") as file:
             for x in range(iteration_start, iteration_end, step):
                 file.write(f"{x} - " + self.decryption(text, x) + "\n")
-        return True
-
-
-kripto = Caesar()
-#print(kripto.encryption("Labas𝞐Pasauli 1923-", 3))
-#print(kripto.decryption("Ocdcu!Šcucvok𝒚4256/", 3))
-print(kripto.brute_force("Ocdcu!Šcucvok𝒚4256/", 0, 50, 1))
+            return True
+        return False
