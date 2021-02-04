@@ -27,7 +27,6 @@ pvz:
 '''
 
 
-
 ABC_UPPER = 'AĄBCČDEĘĖFGHIĮJKLMNOPQRŠTUŲŪVWXYZŽ'
 ABC_DOWN = 'aąbcčdeęėfghiįjklmnopqrsštuųūvwxyzž'
 SYMBOLS = "!@#$%^&*()-_+/.,<>~ ᴪ𝞐𝒚β"
@@ -37,7 +36,9 @@ SYMBOLS_LENGTH = len(SYMBOLS)
 
 
 class Caesar:
-    def __init__(self):
+    def __init__(self, text):
+        self.encrypted_text = text
+        self.decrypted_text = ''
         pass
 
     def encryption(self, text, key):
@@ -56,6 +57,7 @@ class Caesar:
             else:
                 index = SYMBOLS.find(x)
                 string += SYMBOLS[(index + key) % SYMBOLS_LENGTH]
+        self.encrypted_text = string
         return string
 
     def decryption(self, text, key):
@@ -83,3 +85,20 @@ class Caesar:
                 file.write(f"{x} - " + self.decryption(text, x) + "\n")
             return True
         return False
+
+    def brute_force_chain(self, text, key, iterations):
+        with open(f"brute_force_chain_{iterations}.txt", "w") as file:
+            new = self.decryption(text, key)
+            file.write(f"{0} - " + new + "\n")
+            for x in range(iterations - 1):
+                new = self.decryption(new, key)
+                file.write(f"{x+1} - " + new + "\n")
+            return True
+        return False
+
+
+kryptos = Caesar(text="Kipras")
+for x in range(3):
+    print(kryptos.encryption(text=kryptos.encrypted_text, key=3))
+
+print(kryptos.brute_force_chain(text="Tqvxfy", key=3, iterations=10))
