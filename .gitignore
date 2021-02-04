@@ -1,7 +1,7 @@
 #include Directories
 .vs/
-bin/
-bin-int/
+CC++/bin/
+CC++/bin-int/
 
 #include Files
 .user
