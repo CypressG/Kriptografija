@@ -4,26 +4,23 @@ class cryptography:
         self.encrypted = None
         self.key = None
         self.decrypted = None
-    
-    def ceasar_encryption(self,text,key):
+
+    def ceasar_encryption(self, text, key):
         abc_upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         abc_down = 'abcdefghijklmnopqrstuvwxyz'
         string = ''
-        isValid = lambda a,b : True if (a + b) <= 26 else False
+        def isValid(a, b): return True if (a + b) <= 26 else False
         for x in text:
             if x.isalpha():
                 if x.isupper():
                     index = abc_upper.find(x)
-                    string+= abc_upper[index + key % 26]
-
+                    string += abc_upper[index + key % 26]
                 else:
                     index = abc_down.find(x)
-                    string+= abc_down[index + key % 26]
+                    string += abc_down[index + key % 26]
             else:
-                string+=x
+                string += x
         return string
-
-
 
 
 kripto = cryptography()
