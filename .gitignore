@@ -1,6 +1,6 @@
 #include Directories
 .vs/
-/bin/
+bin/
 bin-int/
 
 #include Files
