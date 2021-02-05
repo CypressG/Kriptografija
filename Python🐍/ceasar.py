@@ -99,7 +99,7 @@ class Caesar:
 
 
 kryptos = Caesar()
+print(kryptos.encryption("Kolegija2021",3))
 #for x in range(3):
 #    print(kryptos.encryption(text=kryptos.encrypted_text, key=3))
-print(kryptos.encryption("Kipras",0))
 #print(kryptos.brute_force_chain(text="Tqvxfy", key=3, iterations=10))
