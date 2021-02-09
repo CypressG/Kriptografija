@@ -9,64 +9,52 @@ inside of array.
 
 #CUSTOM_ALPHABET = "AĄBCČDEĘĖFGHIĮJKLMNOPQRŠTUŲŪVWXYZŽ"
 
-
-LETTERS = [x for x in range(65, 91, 1)]
-LETTERS_LENGTH = len(LETTERS)
-SYMBOLS = [x for x in range(33, 48, 1)]
-SYMBOLS_LENGTH = len(SYMBOLS)
-DIGITS = [x for x in range(48, 58, 1)]
-DIGITS_LENGTH = len(DIGITS)
-
-ALL_INCLUDED = 127 - 33
-
-
+ALL_INCLUDED = 122
 class Vigenere:
 
     def __init__(self, plaintext, cipherkey):
         self.plaintext = plaintext
         self.cipherkey = cipherkey
         self.extended()
-        self.encryption()
-        self.decryption(self.encrypted, "kipras123k")
-
     def encryption(self):
         self.encrypted = ''
         for x in range(len(self.plaintext)):
-            value_letter = ord(self.plaintext[x])
-            key_letter = ord(self.cipherkey[x])
-            self.encrypted += chr(self.single_encryption_ascii(
-                value_letter, key_letter, ALL_INCLUDED, 33))
-
-    def decryption(self, encrypted_text, key):
+            self.encrypted += self.single_encryption_ascii(
+                ord(self.plaintext[x]),ord(self.cipherkey[x]), ALL_INCLUDED)
+        return print(self.encrypted)
+    def decryption(self,*args):
+        print(args)
         self.decrypted = ''
+        if len(args) == 2:
+            self.encrypted = args[0]
+            self.extended(args[1])
+        for x in range(len(self.encrypted)):
+            self.decrypted += self.single_decryption_ascii(
+                ord(self.encrypted[x]), ord(self.cipherkey[x]), ALL_INCLUDED)
+        return self.decrypted
 
-        for x in range(len(encrypted_text)):
-            value_letter = ord(encrypted_text[x])
-            key_letter = ord(key[x])
-            self.decrypted += chr(self.single_decryption_ascii(
-                value_letter, key_letter, ALL_INCLUDED, 33))
+    def single_decryption_ascii(self, value, key, number_of_letters):
+        decrypted_letter = (value - key) % number_of_letters 
+        return chr(decrypted_letter)
 
-    def single_decryption_ascii(self, value, key, number_of_letters, position):
-        decrypted_letter = (value - key) % number_of_letters
-        print(decrypted_letter)
-        return decrypted_letter
-
-    def single_encryption_ascii(self, value, key, number_of_letters, position):
-        encrypted_letter = ((value + key) % number_of_letters) + position
-        return encrypted_letter
+    def single_encryption_ascii(self, value, key, number_of_letters):
+        encrypted_letter = (value + key ) % number_of_letters
+        return chr(encrypted_letter)
 
     def single_encryption_custom(self, value, key, number_of_letters):
-        encrypted_letter = ((value + key) % number_of_letters)
-        return encrypted_letter
+        encrypted_letter = (value + key) % number_of_letters
+        return encrypted_letter 
 
-    def extended(self):
+    def extended(self,*args):
         counter = 0
+        if len(args) == 1:
+            self.cipherkey = args[0]
         while(len(self.plaintext) > len(self.cipherkey)):
             self.cipherkey += self.cipherkey[counter]
             counter += 1
 
 
-krypto = Vigenere(plaintext="Kipras4123", cipherkey="kipras123")
-print(krypto.cipherkey)
-print(krypto.encrypted)
-print(krypto.decrypted)
+krypto = Vigenere(plaintext="attack", cipherkey="def")
+
+krypto.encryption()
+print(krypto.decryption("K_`KNW","def"))
