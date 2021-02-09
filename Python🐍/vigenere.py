@@ -33,7 +33,6 @@ class Vigenere:
         return print(self.encrypted)
 
     def decryption(self, *args):
-        print(args)
         self.decrypted = ''
         if len(args) == 2:
             self.encrypted = args[0]
@@ -56,6 +55,7 @@ class Vigenere:
         encrypted_letter = (value + key) % number_of_letters
         return CUSTOM_ALPHABET[encrypted_letter]
 
+    #Extends the length of cipherkey 
     def extended(self, *args):
         counter = 0
         if len(args) == 1:
