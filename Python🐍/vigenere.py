@@ -4,12 +4,18 @@ This task is done only using ASCII letters but the possibility of using foreign
 letters is as well possible by refactoring some code and butting your own custom alphabet
 inside of array. 
 
+
+HOW TO USE IT?
+
+So, for the first part You have to decide if you're using your own CUSTOM ALPHABET or either you use
+unicode
 '''
 
 
-#CUSTOM_ALPHABET = "AĄBCČDEĘĖFGHIĮJKLMNOPQRŠTUŲŪVWXYZŽ"
+CUSTOM_ALPHABET = "AĄBCČDEĘĖFGHIĮJKLMNOPQRŠTUŲŪVWXYZŽ"
 
-ALL_INCLUDED = 122
+# If you're using CUSTOM_ALPHABET instead of UNICODE use len(CUSTOM_ALPHABET) instead of 122
+LENGTH = 122
 
 
 class Vigenere:
@@ -22,8 +28,8 @@ class Vigenere:
     def encryption(self):
         self.encrypted = ''
         for x in range(len(self.plaintext)):
-            self.encrypted += self.single_encryption_ascii(
-                ord(self.plaintext[x]), ord(self.cipherkey[x]), ALL_INCLUDED)
+            self.encrypted += self.single_encryption_unicode(
+                ord(self.plaintext[x]), ord(self.cipherkey[x]), LENGTH)
         return print(self.encrypted)
 
     def decryption(self, *args):
@@ -33,9 +39,9 @@ class Vigenere:
             self.encrypted = args[0]
             self.extended(args[1])
         for x in range(len(self.encrypted)):
-            #If you would like to change decryption type (instead)
-            self.decrypted += self.single_decryption_ascii(
-                ord(self.encrypted[x]), ord(self.cipherkey[x]), ALL_INCLUDED) 
+            # If you would like to change decryption change from _unicode to _custom
+            self.decrypted += self.single_decryption_unicode(
+                ord(self.encrypted[x]), ord(self.cipherkey[x]), LENGTH)
         return self.decrypted
 
     def single_decryption_unicode(self, value, key, number_of_letters):
@@ -48,7 +54,7 @@ class Vigenere:
 
     def single_encryption_custom(self, value, key, number_of_letters):
         encrypted_letter = (value + key) % number_of_letters
-        return encrypted_letter
+        return CUSTOM_ALPHABET[encrypted_letter]
 
     def extended(self, *args):
         counter = 0
