@@ -7,10 +7,10 @@ namespace ConsoleApp6
         static void Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-            Console.WriteLine("Hello World!");
-            Sifravimas naujas = new Sifravimas("Gaidys ąūžčč");
+           // Console.WriteLine("Hello World!");
+            Sifravimas naujas = new Sifravimas("Arnoldas2021");
 
-            naujas.cezaris(naujas, 255);
+            naujas.cezaris(naujas, 2);
         }
     }
 }

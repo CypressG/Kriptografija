@@ -9,12 +9,8 @@ namespace ConsoleApp6
         string Notencoded { get; set; }
 
         string Cezencoded { get; set; }
-
-        byte[] Baitaienc { get; set; }
-
+                
         string Decoded { get; set; }
-
-        int CypherKey { get; set; }
 
         public Sifravimas()
         {
@@ -31,22 +27,14 @@ namespace ConsoleApp6
         {
             Queue<Byte> baitas = new Queue<Byte>();
             byte[] bytas = System.Text.Encoding.UTF8.GetBytes(normtext.Notencoded);
-            byte suds = Convert.ToByte(key);
+            byte keyb = Convert.ToByte(key);
             
             foreach (byte c in bytas)
             {
-                 baitas.Enqueue((byte)(c + suds));
+                 baitas.Enqueue((byte)(c + keyb));
 
             }
-            foreach (byte c in baitas)
-            {
-                Console.WriteLine($"pirmas :{ c} ");
-            }
-
-            //foreach (byte c in baitas)
-            //  {
-            // normtext.Decoded = System.Text.Encoding.UTF8.GetString(baitas);
-            //}
+               
             bytas = baitas.ToArray();
             normtext.Decoded = System.Text.Encoding.UTF8.GetString(bytas);
             baitas.Clear();
@@ -56,12 +44,17 @@ namespace ConsoleApp6
             }
             foreach (byte c in bytas)
             {
-                baitas.Enqueue((byte)(c - suds));
+                baitas.Enqueue((byte)(c - keyb));
 
             }
             bytas = baitas.ToArray();
             normtext.Cezencoded = System.Text.Encoding.UTF8.GetString(bytas);
-            Console.WriteLine($", 213213213pawkepawodpasnjdmponas,,, {normtext.Decoded} ,,,,,,,,,,,,, {normtext.Cezencoded} ");
+            Console.WriteLine($"Pradinis tekstas : {normtext.Notencoded} ");
+            Console.WriteLine($"_____________________________________");
+            Console.WriteLine($"Užkuoduotas tekstas : {normtext.Decoded}");
+            Console.WriteLine($"_____________________________________");
+            Console.WriteLine ($"Atkoduotas tekstas : {normtext.Cezencoded} ");
+            Console.WriteLine($"_____________________________________");
 
         }
 
