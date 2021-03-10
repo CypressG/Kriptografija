@@ -8,14 +8,15 @@ int main()
 {
 
 	std::wstring input;
-	uint32_t rot;
+	uint32_t rot = 0;
 	fmt::print("Iveskite norima zinute: ");
-	std::wcin >> input;
+	scanf("%s", &input);
+	getchar();
 	fmt::print("Iveskite norima poslinki: ");
-	std::wcin >> rot;
+	scanf("%d", &rot);
+	getchar();
 
-
-	CaesarEncrypt encrypt = CaesarEncrypt(input,rot);
+	CaesarEncrypt encrypt = CaesarEncrypt(input, rot);
 	fmt::print(L"Encrypted result: {0} \n", encrypt.showMessage());
 
 	CaesarDecrypt decrypt = CaesarDecrypt(encrypt.showMessage(), rot);
