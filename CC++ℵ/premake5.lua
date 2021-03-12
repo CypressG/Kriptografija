@@ -13,8 +13,9 @@ configurations { "Debug", "Release" }
 
     IncludeDir = {}
     IncludeDir["fmt"] = "Vendor/fmt/include"
+    IncludeDir["cryptopp"] = "Vendor/cryptopp"
 
-project "CeaserCypherC++"
+    project "CeaserCypherC++"
             location "CeaserCypherCPP"
             kind "ConsoleApp"
             language "C++"
@@ -38,7 +39,7 @@ project "CeaserCypherC++"
 
             includedirs
             {
-                "%{prj.name}/src/**",
+                "%{prj.name}/src/*",
                 "%{IncludeDir.fmt}"             
             }
 
@@ -51,3 +52,60 @@ project "CeaserCypherC++"
                     defines { "NDEBUG" }
                     runtime "Release"
                     optimize "On"
+
+    project "AESCpp"
+            location "AESCpp"
+            kind "ConsoleApp"
+            language "C++"
+            cppdialect "C++17"
+            staticruntime "on"
+
+            targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+            objdir("bin-int/" .. outputdir .. "/%{prj.name}")
+
+            files
+            {
+                "%{prj.name}/src/*.h",
+                "%{prj.name}/src/*.hpp",
+                "%{prj.name}/src/*.cpp",
+            }
+
+            defines
+            {
+                "_CRT_SECURE_NO_WARNINGS",
+            }
+
+            includedirs
+            {
+                "%{prj.name}/src/*",
+                "%{IncludeDir.fmt}",
+                "%{IncludeDir.cryptopp}"             
+            }
+
+            filter "configurations:Debug"
+                    defines { "DEBUG" }
+                    runtime "Debug"
+                    symbols "On"
+                    libdirs
+                    {
+                        "%{IncludeDir.cryptopp}/x64/Output/Debug"
+                    }
+        
+                    links
+                    {
+                        "cryptlib"
+                    }
+              
+                 filter "configurations:Release"
+                    defines { "NDEBUG" }
+                    runtime "Release"
+                    optimize "On"
+                    libdirs
+                    {
+                        "%{IncludeDir.cryptopp}/x64/Output/Release"
+                    }
+        
+                    links
+                    {
+                        "cryptlib"
+                    }

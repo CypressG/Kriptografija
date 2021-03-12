@@ -1,0 +1,10 @@
+C:\Users\arnol\source\repos\AESencrypt\obj\Debug\AESencrypt.csprojAssemblyReference.cache
+C:\Users\arnol\source\repos\AESencrypt\obj\Debug\AESencrypt.Form1.resources
+C:\Users\arnol\source\repos\AESencrypt\obj\Debug\AESencrypt.Properties.Resources.resources
+C:\Users\arnol\source\repos\AESencrypt\obj\Debug\AESencrypt.csproj.GenerateResource.cache
+C:\Users\arnol\source\repos\AESencrypt\obj\Debug\AESencrypt.csproj.CoreCompileInputs.cache
+C:\Users\arnol\source\repos\AESencrypt\bin\Debug\AESencrypt.exe.config
+C:\Users\arnol\source\repos\AESencrypt\bin\Debug\AESencrypt.exe
+C:\Users\arnol\source\repos\AESencrypt\bin\Debug\AESencrypt.pdb
+C:\Users\arnol\source\repos\AESencrypt\obj\Debug\AESencrypt.exe
+C:\Users\arnol\source\repos\AESencrypt\obj\Debug\AESencrypt.pdb
