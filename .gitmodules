@@ -1,6 +1,6 @@
-[submodule "CC++ℵ/Vendor/imgui"]
-	path = CC++ℵ/Vendor/imgui
-	url = https://github.com/ocornut/imgui
 [submodule "CC++ℵ/Vendor/fmt"]
 	path = CC++ℵ/Vendor/fmt
 	url = https://github.com/fmtlib/fmt
+[submodule "CC++ℵ/Vendor/cryptopp"]
+	path = CC++ℵ/Vendor/cryptopp
+	url = https://github.com/weidai11/cryptopp
