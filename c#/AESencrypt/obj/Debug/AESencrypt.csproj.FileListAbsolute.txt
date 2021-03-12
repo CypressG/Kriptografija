@@ -8,3 +8,13 @@ C:\Users\arnol\source\repos\AESencrypt\bin\Debug\AESencrypt.exe
 C:\Users\arnol\source\repos\AESencrypt\bin\Debug\AESencrypt.pdb
 C:\Users\arnol\source\repos\AESencrypt\obj\Debug\AESencrypt.exe
 C:\Users\arnol\source\repos\AESencrypt\obj\Debug\AESencrypt.pdb
+F:\GITHUBAS\Kriptografija\c#\AESencrypt\bin\Debug\AESencrypt.exe.config
+F:\GITHUBAS\Kriptografija\c#\AESencrypt\bin\Debug\AESencrypt.exe
+F:\GITHUBAS\Kriptografija\c#\AESencrypt\bin\Debug\AESencrypt.pdb
+F:\GITHUBAS\Kriptografija\c#\AESencrypt\obj\Debug\AESencrypt.csprojAssemblyReference.cache
+F:\GITHUBAS\Kriptografija\c#\AESencrypt\obj\Debug\AESencrypt.Form1.resources
+F:\GITHUBAS\Kriptografija\c#\AESencrypt\obj\Debug\AESencrypt.Properties.Resources.resources
+F:\GITHUBAS\Kriptografija\c#\AESencrypt\obj\Debug\AESencrypt.csproj.GenerateResource.cache
+F:\GITHUBAS\Kriptografija\c#\AESencrypt\obj\Debug\AESencrypt.csproj.CoreCompileInputs.cache
+F:\GITHUBAS\Kriptografija\c#\AESencrypt\obj\Debug\AESencrypt.exe
+F:\GITHUBAS\Kriptografija\c#\AESencrypt\obj\Debug\AESencrypt.pdb

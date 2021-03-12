@@ -46,10 +46,7 @@ namespace AESencrypt
             byte[] encbytes = Convert.FromBase64String(textas);
             AesCryptoServiceProvider encdec = new AesCryptoServiceProvider();
             encdec.BlockSize = 128;
-            encdec.KeySize = 256;
-            var keygenerator = new Rfc2898DeriveBytes(Form1.paswordas, Salt, 300);
-            encdec.Key = raktas;
-            encdec.IV = romenas;
+            encdec.KeySize = 256;          
             encdec.Padding = PaddingMode.PKCS7;
             if (Form1.mode == false)
             {
@@ -60,7 +57,7 @@ namespace AESencrypt
                 encdec.Mode = CipherMode.ECB;
             }
 
-            ICryptoTransform icrypt = encdec.CreateDecryptor(encdec.Key, encdec.IV);
+            ICryptoTransform icrypt = encdec.CreateDecryptor(raktas, romenas);
             byte[] decrytu = icrypt.TransformFinalBlock(encbytes, 0, encbytes.Length);
             icrypt.Dispose();
             return ASCIIEncoding.ASCII.GetString(decrytu);
