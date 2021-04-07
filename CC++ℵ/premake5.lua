@@ -12,7 +12,6 @@ configurations { "Debug", "Release" }
     outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
     IncludeDir = {}
-    IncludeDir["fmt"] = "Vendor/fmt/include"
     IncludeDir["cryptopp"] = "Vendor/cryptopp"
 
     project "CeaserCypherC++"
@@ -109,3 +108,41 @@ configurations { "Debug", "Release" }
                     {
                         "cryptlib"
                     }
+
+                    project "RSACpp"
+                    location "RSACpp"
+                    kind "ConsoleApp"
+                    language "C++"
+                    cppdialect "C++17"
+                    staticruntime "on"
+        
+                    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+                    objdir("bin-int/" .. outputdir .. "/%{prj.name}")
+        
+                    files
+                    {
+                        "%{prj.name}/src/*.h",
+                        "%{prj.name}/src/*.hpp",
+                        "%{prj.name}/src/*.cpp",
+                    }
+        
+                    defines
+                    {
+                        "_CRT_SECURE_NO_WARNINGS",
+                    }
+        
+                    includedirs
+                    {
+                        "%{prj.name}/src/*",
+                        "Vendor/fmt/include"          
+                    }
+        
+                    filter "configurations:Debug"
+                            defines { "DEBUG" }
+                            runtime "Debug"
+                            symbols "On"
+                
+                         filter "configurations:Release"
+                            defines { "NDEBUG" }
+                            runtime "Release"
+                            optimize "On"
