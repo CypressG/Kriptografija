@@ -12,7 +12,7 @@ namespace AESencrypt
         private static readonly byte[] Salt =
         new byte[] { 10, 20, 30, 40, 50, 60, 70, 80 };
         private static byte[] raktas;
-        private static byte[] romenas;
+        public static byte[] romenas;
         public static string  AesEncryptas(string textas)
         {
             byte[] textbytes = ASCIIEncoding.ASCII.GetBytes(textas);

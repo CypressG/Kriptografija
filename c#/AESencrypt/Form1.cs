@@ -53,9 +53,10 @@ namespace AESencrypt
                filetext = rd.ReadToEnd();
             }
             fs.Close();
-            MessageBox.Show(filetext);
+           // MessageBox.Show(filetext);
             EncryptedTextBox.Text = AesEncry.AesEncryptas(filetext);
             File.WriteAllText(localLink, EncryptedTextBox.Text);
+
            
            
 
