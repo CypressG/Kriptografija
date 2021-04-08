@@ -10,7 +10,7 @@ namespace ConsoleApp6
            // Console.WriteLine("Hello World!");
             Sifravimas naujas = new Sifravimas("Arnoldas2021");
 
-            naujas.cezaris(naujas, 2);
+            naujas.cezaris(naujas, 256);
         }
     }
 }

@@ -52,6 +52,7 @@ namespace RSAencryption
             // 
             // richTextBox2
             // 
+            this.richTextBox2.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.richTextBox2.Location = new System.Drawing.Point(3, 158);
             this.richTextBox2.Name = "richTextBox2";
             this.richTextBox2.Size = new System.Drawing.Size(359, 126);
@@ -102,6 +103,7 @@ namespace RSAencryption
             this.Decrypt_Button.TabIndex = 8;
             this.Decrypt_Button.Text = "Decrypt";
             this.Decrypt_Button.UseVisualStyleBackColor = true;
+            this.Decrypt_Button.Click += new System.EventHandler(this.Decrypt_Button_Click);
             // 
             // textBox1
             // 
