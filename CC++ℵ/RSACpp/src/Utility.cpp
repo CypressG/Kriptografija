@@ -13,24 +13,24 @@ std::vector<long long int> Utility::convertStringToBytes(std::string targetStrin
 	return temp;
 }
 
-std::vector<long long int> Utility::convertU16StringToBytes(std::u16string targetString)
+std::vector<long long int> Utility::convertU32StringToBytes(std::u32string targetString)
 {
 	std::vector<long long int> temp;
 	temp.reserve(targetString.size());
-	for (char16_t x : targetString)
+	for (char32_t x : targetString)
 	{
 		temp.push_back(static_cast<long long int>(x));
 	}
 	return temp;
 }
 
-std::u16string Utility::convertBytesToU16String(std::vector<long long int> targetBytes)
+std::u32string Utility::convertBytesToU32String(std::vector<long long int> targetBytes)
 {
-	std::u16string temp;
+	std::u32string temp;
 	temp.reserve(targetBytes.size());
 	for (long long int x : targetBytes)
 	{
-		temp.push_back(static_cast<char16_t>(x));
+		temp.push_back(static_cast<char32_t>(x));
 	}
 
 	return temp;
@@ -60,21 +60,29 @@ bool Utility::checkIfPrime(long long int x)
 	return true;
 }
 
+long int Utility::gcd(int a, int b)
+{
+	if (a == 0)
+		return b;
+	return gcd(b % a, a);
+}
+
 long int Utility::cd(long long int a, long long int phi)
 {
-	long int k = 1;
+	long long int k = 1;
 	while (true)
 	{
-	k = k + phi;
-	if (k % a == 0)
-	return(k / a);
+		k += phi;
+		if (k % a == 0)
+			return(k / a);
 	}
 }
 
-std::string Utility::hashish(std::u16string encryptedMessage)
+std::string Utility::hashish(std::u32string encryptedMessage)
 {
-	std::hash<std::u16string> hashStr;
-	size_t hash = hashStr(encryptedMessage);
+	int x = 5;
+	std::hash<std::u32string> hashStr;
+	long long unsigned int hash = hashStr(encryptedMessage);
 	return std::to_string(hash);
 }
 
@@ -84,12 +92,12 @@ void Utility::createDirectory(std::string rootdirname, std::string dirname)
 	std::filesystem::create_directory(dirname);
 }
 
-std::u16string Utility::readEncryptedStringFile(std::string dir)
+std::u32string Utility::readEncryptedStringFile(std::string dir)
 {
-	std::u16string temp;
-	using u16ifstream = std::basic_ifstream<char16_t>;
+	std::u32string temp;
+	using u32ifstream = std::basic_ifstream<char32_t>;
 
-	u16ifstream file(dir, std::ifstream::out | std::ifstream::app);
+	u32ifstream file(dir, std::ifstream::out | std::ifstream::app);
 
 	if (file.is_open())
 	{

@@ -13,12 +13,12 @@ class RSA
 {
 public: 
 	RSA(); //Encryption constructor
-	RSA(std::u16string encryptedMessage, long long int n, std::vector<long long int> publicKey); //Decryption constructor
+	RSA(std::u32string encryptedMessage, long long int n, std::vector<long long int> publicKey); //Decryption constructor
 	~RSA();
 
 private:
 	std::string m_originalMessage; //Original or Decrypted
-	std::u16string m_encryptedMessage; //Encrypted
+	std::u32string m_encryptedMessage; //Encrypted
 	std::vector<long long int> m_originalMessageAscii; //Original or Decrypted
 	std::vector<long long int> m_encryptedMessageAscii; //Encrypted
 	long long int m_p = 0;

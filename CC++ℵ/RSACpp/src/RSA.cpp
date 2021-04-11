@@ -33,16 +33,17 @@ RSA::RSA()
 	generateKeys();
 
 	Encrypt();
-	
+	int x = 5;
+
 	Utility::createDirectory(rootFolder, Utility::hashish(m_encryptedMessage));
 	createEncryptedPackets();
 }
 
-RSA::RSA(std::u16string encryptedMessage,long long int n, std::vector<long long int> privateKey)
+RSA::RSA(std::u32string encryptedMessage,long long int n, std::vector<long long int> privateKey)
 	:m_encryptedMessage(encryptedMessage), m_n(n)
 {
 	//m_Key.privateKey;
-	m_encryptedMessageAscii = Utility::convertU16StringToBytes(m_encryptedMessage);
+	m_encryptedMessageAscii = Utility::convertU32StringToBytes(m_encryptedMessage);
 	m_Key.privateKey = privateKey;
 	int x = 5;
 	Decrypt();
@@ -74,7 +75,7 @@ void RSA::generateKeys()
 				m_Key.publicKey.push_back(flag);
 				position++;
 			}
-			if (position == 499)
+			if (position == 50)
 			{
 				break;
 			}
@@ -88,7 +89,7 @@ void RSA::Encrypt()
 	unsigned long long int pt, key = m_Key.publicKey[0], position;
 	for (long long int x : m_originalMessageAscii)
 	{
-		pt = x - 16;
+		pt = x - 32;
 		position = 1;
 		for (int y = 0; y < key; y++)
 		{
@@ -97,14 +98,19 @@ void RSA::Encrypt()
 		}
 		m_encryptedMessageAscii.push_back(position);
 	}
-	//m_encryptedMessageAscii.push_back(0); // \0
-	m_encryptedMessage = Utility::convertBytesToU16String(m_encryptedMessageAscii);
+	m_encryptedMessageAscii.push_back(0); // \0
+	m_encryptedMessage = Utility::convertBytesToU32String(m_encryptedMessageAscii);
 
-	std::wstring_convert<std::codecvt_utf8<char16_t>, char16_t> convert;
+	//std::wstring_convert<std::codecvt_utf16<char32_t>,char32_t> convert32;
 
-	std::string converted = convert.to_bytes(m_encryptedMessage);
+	//std::string converted = convert32.to_bytes(m_encryptedMessage);
 	
-	fmt::print("Encrypted Data: {}\n", converted );
+	fmt::print("Encrypted Data: ");
+	for (long long int x : m_encryptedMessageAscii)
+	{
+		fmt::print("{:X} ", x);
+	}
+	fmt::print("\n");
 	fmt::print("Encrypted HASHDir: {}\n", Utility::hashish(m_encryptedMessage));
 }
 
@@ -126,19 +132,19 @@ void RSA::Decrypt()
 			position *= x;
 			position %= m_n;
 		}
-		m_originalMessageAscii.push_back(position + 16);
+		m_originalMessageAscii.push_back(position + 32);
 		i++;
 	}
-
-	m_originalMessage = Utility::convertBytesToString(m_originalMessageAscii);
 	m_originalMessageAscii.push_back(0); // \0
+	m_originalMessage = Utility::convertBytesToString(m_originalMessageAscii);
+	
 
 	fmt::print("Decrypted Data: {}", m_originalMessage);
 }
 
 void RSA::createEncryptedPackets()
 {
-	using u16ofstream = std::basic_ofstream<char16_t>;
+	using u16ofstream = std::basic_ofstream<char32_t>;
 
 	u16ofstream encryptedData('.'+ rootFolder + '/' + Utility::hashish(m_encryptedMessage) + '/' + "enc.dat", std::ofstream::out | std::ofstream::app);
 
