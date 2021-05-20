@@ -13,6 +13,11 @@ configurations { "Debug", "Release" }
 
     IncludeDir = {}
     IncludeDir["cryptopp"] = "Vendor/cryptopp"
+    IncludeDir["FMT"] = "Vendor/fmt/include"
+
+    group "Dependencies"
+    include "Vendor/fmt"
+    group ""
 
     project "CeaserCypherC++"
             location "CeaserCypherCPP"
@@ -134,7 +139,12 @@ configurations { "Debug", "Release" }
                     includedirs
                     {
                         "%{prj.name}/src/*",
-                        "Vendor/fmt/include"          
+                        "%{IncludeDir.FMT}"     
+                    }
+
+                    links
+                    {
+                        "FMT",
                     }
         
                     filter "configurations:Debug"
