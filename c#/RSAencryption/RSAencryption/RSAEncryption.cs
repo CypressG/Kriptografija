@@ -140,10 +140,10 @@ namespace RSAencryption
             for (int i = 0; i < pildom.Length; i++)
             {
                 Int64 position = 1;
-               // Int64 value = pildom[i];
+               
                 Int64 pt = pildom[i] - 64;
 
-                // Int64 pt = value - 96;
+                
                 for (int j = 0; j < key; j++)
                 {
                     position *= pt;
@@ -152,19 +152,11 @@ namespace RSAencryption
                 }
                 
                 pildom[i] = position;
-               // myTextByteArray2[i] = (byte)position;
+               
 
             }
                       
-/*
-            byte[] textas;
-            int jabal = 0;
-            foreach(Int64 c in pildom)
-            {
-               // textas.Append((byte)c);
-                textas[jabal] = (byte)c;
-                jabal++;
-            }*/
+
 
 
             return pildom;

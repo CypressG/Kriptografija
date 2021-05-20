@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\HellsinGas\\source\\repos\\RSAencryption\\RSAencryption\\RSAencryption.csproj",
+      "projectUniqueName": "F:\\GITHUBAS\\Kriptografija\\c#\\RSAencryption\\RSAencryption\\RSAencryption.csproj",
       "projectName": "RSAencryption",
-      "projectPath": "C:\\Users\\HellsinGas\\source\\repos\\RSAencryption\\RSAencryption\\RSAencryption.csproj",
+      "projectPath": "F:\\GITHUBAS\\Kriptografija\\c#\\RSAencryption\\RSAencryption\\RSAencryption.csproj",
       "packagesPath": "C:\\Users\\HellsinGas\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\HellsinGas\\source\\repos\\RSAencryption\\RSAencryption\\obj\\",
+      "outputPath": "F:\\GITHUBAS\\Kriptografija\\c#\\RSAencryption\\RSAencryption\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
