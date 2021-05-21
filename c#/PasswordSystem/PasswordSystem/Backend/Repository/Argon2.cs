@@ -22,16 +22,17 @@ namespace PasswordSystem.Backend.Repository
          
         }
 
-        private string Argon2Impl(string password)
+        public string Argon2Impl(string password)
         {
             byte[] salt = new byte[16];
             salt = Encoding.UTF8.GetBytes("fjH!wa+OAC#P*Avu");
             var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password));
+            argon2.Salt = salt;
             argon2.DegreeOfParallelism = 8;
             argon2.Iterations = 4;
-            argon2.MemorySize = 1024 * 1024;
+            argon2.MemorySize = 1024;
             string hash = Convert.ToBase64String(argon2.GetBytes(16));
-
+            MessageBox.Show(hash);
             return hash;
         }
 

@@ -167,7 +167,7 @@ namespace PasswordSystem.Backend.Repository
                 }
             }
             string encryptedPassword = Convert.ToBase64String(encrypted);
-            MessageBox.Show($"Encrypted:{encryptedPassword}");
+            
             return encryptedPassword;
         }
 
@@ -209,7 +209,7 @@ namespace PasswordSystem.Backend.Repository
                     }
                 }
             }
-            MessageBox.Show($"decrypted:{plaintext}");
+            
             return plaintext;
         }
                
