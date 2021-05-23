@@ -17,13 +17,24 @@ namespace PasswordSystem
     {
         public DirectoryInfo directoryInfo;
         string currentUser;
+        FileInfo userFileS;
+      public static  List<RegistratrionFormConstruct> userPasswordList = new List<RegistratrionFormConstruct>();
        public RegistratrionFormConstruct construct;
         public LogedInScreen(DirectoryInfo currentDir, string user)
         {
             InitializeComponent();            
             directoryInfo = currentDir;
-            button2.Visible = false;
-            changePasswordButton.Visible = false;
+            FileInfo userInfo = new FileInfo(currentDir.FullName + "/" + user + ".txt.aes");
+            AesEcnryption aesEcnryption = new AesEcnryption();
+            aesEcnryption.FileDecryption(userInfo);
+            FileInfo userFile = new FileInfo(currentDir.FullName + "/" + user + ".txt");
+            foreach(string line in File.ReadAllLines(userFile.FullName))
+            {
+                string[] afterSplit = line.Split(",");
+                userPasswordList.Add(new RegistratrionFormConstruct(afterSplit[0], afterSplit[1], afterSplit[2], afterSplit[3]));
+                passwordNameBox.Items.Add(afterSplit[0]);
+            }
+            userFileS = userFile;
             currentUser = user;
         }
 
@@ -32,13 +43,11 @@ namespace PasswordSystem
             
             
             bool status = false;
-            foreach(FileInfo fileInfo in directoryInfo.GetFiles())
+            foreach(RegistratrionFormConstruct formConstruct in userPasswordList)
             {
-                string[] filename = fileInfo.Name.Split('.');
-                if (filename[0].Equals(inputBox.Text, StringComparison.Ordinal))
+                if (formConstruct.name.Equals(inputBox.Text, StringComparison.Ordinal))
                 {
-                    MessageBox.Show($"user : {filename[0].ToString()} has been deleted");
-                    File.Delete(fileInfo.FullName);
+                    userPasswordList.Remove(formConstruct);
                     status = true;
                     break;
                 }
@@ -46,7 +55,7 @@ namespace PasswordSystem
             }
             if (!status)
             {
-                MessageBox.Show($"Could not find  user {inputBox.Text}");
+                MessageBox.Show($"Could not find password with that name :{inputBox.Text}");
             }
 
         }
@@ -61,61 +70,41 @@ namespace PasswordSystem
             bool status = false;
             string[] fileDataString = new string[4];
             AesEcnryption aesEcnryption = new AesEcnryption();
-            FileInfo foundFile = null;
-            foreach (FileInfo fileInfo in directoryInfo.GetFiles())
-            {
-                string[] filename = fileInfo.Name.Split('.');
-                if (filename[0].Equals(inputBox.Text, StringComparison.Ordinal))
+            
+            foreach (RegistratrionFormConstruct construct in userPasswordList)
+            {             
+                
+                if (construct.name.Equals(inputBox.Text, StringComparison.Ordinal))
                 {
-                    if (fileInfo.Name.Contains("aes"))
-                    {
-                        aesEcnryption.FileDecryption(fileInfo);
-                        foundFile = fileInfo;
-                        fileDataString = File.ReadAllText(fileInfo.FullName.Substring(0, fileInfo.FullName.Length - 3)).Split(',');
-                        status = true;
-                        break;
-                    }
-                    else
-                    {
-                        //  MessageBox.Show($"user : {filename[0].ToString()} has been deleted");
-                        fileDataString = File.ReadAllText(fileInfo.FullName).Split(',');
-                        foundFile = fileInfo;
-                        status = true;
-                        break;
-                    }
+                    passwordNameBox.Text = construct.name;
+                    passwordBox.Text = construct.password;
+                    status = true;
                 }
 
             }
             if (!status)
             {
-                MessageBox.Show($"Could not find  user {inputBox.Text}");
+                MessageBox.Show($"Could not find  such password {inputBox.Text}");
             }
-            else
-            {
-                RegistratrionFormConstruct registratrionFormConstruct = new RegistratrionFormConstruct();
-                registratrionFormConstruct.name = fileDataString[0];
-                registratrionFormConstruct.password = fileDataString[1];
-                registratrionFormConstruct.application = fileDataString[2];
-                registratrionFormConstruct.comment = fileDataString[3];
-                registratrionFormConstruct.passwordHash = fileDataString[4];
-                FileInfo fileInfo = new FileInfo(directoryInfo.FullName + "/" + inputBox.Text + ".txt");
-                construct = registratrionFormConstruct;
-                aesEcnryption.FileEncryption(fileInfo);
-                button2.Visible = true;
-                passwordBox.Text = registratrionFormConstruct.password;
-                argon2TextBox.Text = registratrionFormConstruct.passwordHash;
-                changePasswordButton.Visible = true;
-            }
+            
         }
 
         private void LogedInScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!File.Exists(directoryInfo.FullName + "/" + currentUser + ".txt.aes"))
+            File.Create(userFileS.FullName).Dispose();
+            using (StreamWriter streamWriter = new StreamWriter(userFileS.FullName))
             {
-                FileInfo fileInfo = new FileInfo(directoryInfo.FullName + "/" + currentUser + ".txt");
-                AesEcnryption aesEcnryption = new AesEcnryption();
-                aesEcnryption.FileEncryption(fileInfo);
+                foreach(RegistratrionFormConstruct registratrionFormConstruct in userPasswordList)
+                {
+                    string inputStr = registratrionFormConstruct.name + "," + registratrionFormConstruct.password +
+                "," + registratrionFormConstruct.application + "," + registratrionFormConstruct.comment;
+                    streamWriter.WriteLine(inputStr);
+                }
             }
+
+            AesEcnryption aesEcnryption = new AesEcnryption();
+            aesEcnryption.FileEncryption(userFileS);
+
         }
 
         private void decryptButton_Click(object sender, EventArgs e)
@@ -126,17 +115,63 @@ namespace PasswordSystem
 
         private void changePasswordButton_Click(object sender, EventArgs e)
         {
-            AesEcnryption aesEcnryption = new AesEcnryption();
-            Argon2 argon2 = new Argon2();
-            construct.password = aesEcnryption.PasswordEncryption(newPasswordBox.Text);
-            construct.passwordHash = argon2.Argon2Impl(construct.password);
-            FileSystemUtility fileSystemUtility = new FileSystemUtility();
-            fileSystemUtility.RegistrationAndEncryption(construct);
+            if (inputBox.Text.Equals(currentUser, StringComparison.Ordinal))
+            {
+                foreach (RegistratrionFormConstruct registratrion in userPasswordList)
+                {
+                    if (registratrion.name.Equals(inputBox.Text, StringComparison.Ordinal))
+                    {
+                        AesEcnryption aesEcnryption = new AesEcnryption();
+                        registratrion.password = aesEcnryption.PasswordEncryption(newPasswordBox.Text);
+                        PasswordControls.ChangeAccountPassword(registratrion);
+
+                    }
+                }
+            }
+            else
+            {
+                foreach (RegistratrionFormConstruct registratrion in userPasswordList)
+                {
+                    if (registratrion.name.Equals(inputBox.Text, StringComparison.Ordinal))
+                    {
+                        AesEcnryption aesEcnryption = new AesEcnryption();
+                        registratrion.password = aesEcnryption.PasswordEncryption(newPasswordBox.Text);
+
+                    }
+                }
+            }
         }
 
         private void copyButton_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(passwordBox.Text);
+        }
+
+        private void passwordNameBox_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            for (int ix = 0; ix < passwordNameBox.Items.Count; ++ix)
+            {
+                if (ix != e.Index) passwordNameBox.SetItemChecked(ix, false);
+            }
+            foreach(object itemChecked in passwordNameBox.CheckedItems)
+            {
+                inputBox.Text = itemChecked.ToString();
+            }
+        }
+
+        private void addNewPSWbutton_Click(object sender, EventArgs e)
+        {
+            NewPasswordCreation newPasswordCreation = new NewPasswordCreation();
+            newPasswordCreation.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            passwordNameBox.Items.Clear();
+            foreach(RegistratrionFormConstruct registratrionFormConstruct in userPasswordList)
+            {
+                passwordNameBox.Items.Add(registratrionFormConstruct.name);
+            }
         }
     }
 }

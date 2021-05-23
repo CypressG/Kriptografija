@@ -42,12 +42,14 @@ namespace PasswordSystem
             this.decryptButton = new System.Windows.Forms.Button();
             this.copyButton = new System.Windows.Forms.Button();
             this.argon2TextBox = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.passwordNameBox = new System.Windows.Forms.CheckedListBox();
+            this.addNewPSWbutton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // searchOptionButton
             // 
-            this.searchOptionButton.Location = new System.Drawing.Point(215, 388);
+            this.searchOptionButton.Location = new System.Drawing.Point(67, 633);
             this.searchOptionButton.Name = "searchOptionButton";
             this.searchOptionButton.Size = new System.Drawing.Size(182, 29);
             this.searchOptionButton.TabIndex = 0;
@@ -57,7 +59,7 @@ namespace PasswordSystem
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(403, 335);
+            this.button2.Location = new System.Drawing.Point(378, 587);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(182, 29);
             this.button2.TabIndex = 1;
@@ -67,7 +69,7 @@ namespace PasswordSystem
             // 
             // changePasswordButton
             // 
-            this.changePasswordButton.Location = new System.Drawing.Point(403, 388);
+            this.changePasswordButton.Location = new System.Drawing.Point(378, 633);
             this.changePasswordButton.Name = "changePasswordButton";
             this.changePasswordButton.Size = new System.Drawing.Size(182, 29);
             this.changePasswordButton.TabIndex = 2;
@@ -77,21 +79,21 @@ namespace PasswordSystem
             // 
             // inputBox
             // 
-            this.inputBox.Location = new System.Drawing.Point(200, 114);
+            this.inputBox.Location = new System.Drawing.Point(175, 300);
             this.inputBox.Name = "inputBox";
             this.inputBox.Size = new System.Drawing.Size(385, 27);
             this.inputBox.TabIndex = 3;
             // 
             // passwordBox
             // 
-            this.passwordBox.Location = new System.Drawing.Point(200, 174);
+            this.passwordBox.Location = new System.Drawing.Point(175, 358);
             this.passwordBox.Name = "passwordBox";
             this.passwordBox.Size = new System.Drawing.Size(385, 27);
             this.passwordBox.TabIndex = 4;
             // 
             // newPasswordBox
             // 
-            this.newPasswordBox.Location = new System.Drawing.Point(200, 274);
+            this.newPasswordBox.Location = new System.Drawing.Point(175, 490);
             this.newPasswordBox.Name = "newPasswordBox";
             this.newPasswordBox.Size = new System.Drawing.Size(385, 27);
             this.newPasswordBox.TabIndex = 5;
@@ -99,7 +101,7 @@ namespace PasswordSystem
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(5, 121);
+            this.label1.Location = new System.Drawing.Point(14, 307);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(144, 20);
             this.label1.TabIndex = 7;
@@ -108,7 +110,7 @@ namespace PasswordSystem
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(79, 174);
+            this.label2.Location = new System.Drawing.Point(77, 367);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(70, 20);
             this.label2.TabIndex = 8;
@@ -117,7 +119,7 @@ namespace PasswordSystem
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(43, 281);
+            this.label3.Location = new System.Drawing.Point(52, 497);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(106, 20);
             this.label3.TabIndex = 9;
@@ -125,7 +127,7 @@ namespace PasswordSystem
             // 
             // generateButton
             // 
-            this.generateButton.Location = new System.Drawing.Point(617, 272);
+            this.generateButton.Location = new System.Drawing.Point(586, 488);
             this.generateButton.Name = "generateButton";
             this.generateButton.Size = new System.Drawing.Size(94, 29);
             this.generateButton.TabIndex = 11;
@@ -135,7 +137,7 @@ namespace PasswordSystem
             // 
             // decryptButton
             // 
-            this.decryptButton.Location = new System.Drawing.Point(595, 174);
+            this.decryptButton.Location = new System.Drawing.Point(586, 358);
             this.decryptButton.Name = "decryptButton";
             this.decryptButton.Size = new System.Drawing.Size(94, 29);
             this.decryptButton.TabIndex = 12;
@@ -145,7 +147,7 @@ namespace PasswordSystem
             // 
             // copyButton
             // 
-            this.copyButton.Location = new System.Drawing.Point(706, 174);
+            this.copyButton.Location = new System.Drawing.Point(711, 356);
             this.copyButton.Name = "copyButton";
             this.copyButton.Size = new System.Drawing.Size(94, 29);
             this.copyButton.TabIndex = 13;
@@ -155,26 +157,48 @@ namespace PasswordSystem
             // 
             // argon2TextBox
             // 
-            this.argon2TextBox.Location = new System.Drawing.Point(200, 223);
+            this.argon2TextBox.Location = new System.Drawing.Point(175, 435);
             this.argon2TextBox.Name = "argon2TextBox";
             this.argon2TextBox.Size = new System.Drawing.Size(385, 27);
             this.argon2TextBox.TabIndex = 14;
             // 
-            // label4
+            // passwordNameBox
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(27, 232);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(122, 20);
-            this.label4.TabIndex = 15;
-            this.label4.Text = "Argon2 psw hash";
+            this.passwordNameBox.FormattingEnabled = true;
+            this.passwordNameBox.Location = new System.Drawing.Point(27, 12);
+            this.passwordNameBox.Name = "passwordNameBox";
+            this.passwordNameBox.Size = new System.Drawing.Size(863, 268);
+            this.passwordNameBox.TabIndex = 15;
+            this.passwordNameBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.passwordNameBox_ItemCheck);
+            // 
+            // addNewPSWbutton
+            // 
+            this.addNewPSWbutton.Location = new System.Drawing.Point(981, 572);
+            this.addNewPSWbutton.Name = "addNewPSWbutton";
+            this.addNewPSWbutton.Size = new System.Drawing.Size(162, 112);
+            this.addNewPSWbutton.TabIndex = 16;
+            this.addNewPSWbutton.Text = "Add new password";
+            this.addNewPSWbutton.UseVisualStyleBackColor = true;
+            this.addNewPSWbutton.Click += new System.EventHandler(this.addNewPSWbutton_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(896, 253);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(73, 27);
+            this.button1.TabIndex = 17;
+            this.button1.Text = "Refresh";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // LogedInScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label4);
+            this.ClientSize = new System.Drawing.Size(1189, 767);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.addNewPSWbutton);
+            this.Controls.Add(this.passwordNameBox);
             this.Controls.Add(this.argon2TextBox);
             this.Controls.Add(this.copyButton);
             this.Controls.Add(this.decryptButton);
@@ -211,6 +235,8 @@ namespace PasswordSystem
         private System.Windows.Forms.Button decryptButton;
         private System.Windows.Forms.Button copyButton;
         private System.Windows.Forms.TextBox argon2TextBox;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckedListBox passwordNameBox;
+        private System.Windows.Forms.Button addNewPSWbutton;
+        private System.Windows.Forms.Button button1;
     }
 }

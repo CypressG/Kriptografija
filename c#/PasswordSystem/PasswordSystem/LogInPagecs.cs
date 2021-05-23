@@ -10,13 +10,13 @@ using System.Windows.Forms;
 using System.IO;
 using PasswordSystem.Backend.Models;
 using PasswordSystem.Backend.Repository;
+using System.IO.Compression;
 
 namespace PasswordSystem
 {
     public partial class LogInPagecs : Form
-    {
-        private string testFileName = "F:/SAUGUMO TEST CHAMBER4/TestFileFromRequirements.txt";
-        private string encryptedPSW;
+    {        
+        
         public LogInPagecs()
         {
             InitializeComponent();
@@ -27,9 +27,9 @@ namespace PasswordSystem
 
         private void loginButton_Click(object sender, EventArgs e)
         {
-            DirectoryInfo directoryInfo = new DirectoryInfo("F:/SAUGUMO TEST CHAMBER4");
+            DirectoryInfo directoryInfo = new DirectoryInfo("F:/SAUGUMO TEST CHAMBER4/PasswordSystemFiles");
             bool found = false;
-            FileInfo foundFile =null;
+            
             bool login = false;
 
             if (!String.IsNullOrWhiteSpace(nameBox.Text) && !String.IsNullOrWhiteSpace(passwordBox.Text))
@@ -41,7 +41,7 @@ namespace PasswordSystem
                     {                        
                         found = true;
                         FileSystemUtility fileSystemUtility = new FileSystemUtility();
-                        login = fileSystemUtility.LoginDecryptionAndValidation(nameBox.Text, passwordBox.Text, fileInfo);
+                        login = fileSystemUtility.LoginDecryptionAndValidation(nameBox.Text, passwordBox.Text);
                         
                     }
 
@@ -59,12 +59,7 @@ namespace PasswordSystem
             else MessageBox.Show("Please input proper login credentials");
 
 
-           /* FileInfo testFile = new FileInfo("F:/SAUGUMO TEST CHAMBER4/admin.txt");
-            AesEcnryption aesEcnryption = new AesEcnryption();
-
-            aesEcnryption.FileEncryption(testFile);
-            encryptedPSW = aesEcnryption.PasswordEncryption("admin");
-            MessageBox.Show(encryptedPSW);*/
+           
         }
 
         private void registerButton_Click(object sender, EventArgs e)
@@ -76,51 +71,39 @@ namespace PasswordSystem
 
         private void InitialCheck()
         {
-            string testFile = "Paleidus sistemą " +
-                    "pirmą kartą sukuriamas .csv arba .txt failas. " +
-                    "Išjungiant sistemą šis failas turi būti užšifruojamas AES algoritmu. " +
-                    "Kitą kartą paleidus sistemą failas yra dešifruojamas. (4 taškai)";
-            DirectoryInfo initial = new DirectoryInfo("F:/SAUGUMO TEST CHAMBER4/");
-            bool testFileExistance = false;
+           
+            DirectoryInfo initial = new DirectoryInfo("F:/SAUGUMO TEST CHAMBER4/");            
             FileInfo testFileInfo = null;
+            AesEcnryption aesEcnryption = new AesEcnryption();
 
-            foreach (FileInfo fileInfo in initial.GetFiles())
+            if(File.Exists("F:/SAUGUMO TEST CHAMBER4/Area51.zip.aes"))
             {
-                
-                string fullname = fileInfo.Name;
-                if (fullname.Contains("TestFileFromRequirements.txt"))
-                {
-                    testFileExistance = true;
-                    FileInfo foundFile = new FileInfo(fileInfo.FullName);
-                    testFileInfo = foundFile;                    
-                }
-            }
-            if (testFileExistance == true)
-            {
-                AesEcnryption aesEcnryption = new AesEcnryption();
-
+                testFileInfo = new FileInfo("F:/SAUGUMO TEST CHAMBER4/Area51.zip.aes");
                 aesEcnryption.FileDecryption(testFileInfo);
+                ZipFile.ExtractToDirectory(testFileInfo.FullName.Replace(".aes",""), initial.FullName + "PasswordSystemFiles");
+                File.Delete(testFileInfo.FullName.Replace(".aes",""));
             }
             else
             {
-                File.Create(testFileName).Dispose();
-                File.WriteAllBytes(testFileName, Encoding.UTF8.GetBytes(testFile));
-
-            }
-
-            if (initial.GetFiles().Length == 0)
-            {
-
                 RegiterScreen regiterScreen = new RegiterScreen();
                 regiterScreen.Show();
-
-            }            
+            }
         }
 
         private void LogInPagecs_FormClosing(object sender, FormClosingEventArgs e)
         {
             AesEcnryption aesEcnryption = new AesEcnryption();
-            FileInfo file = new FileInfo(testFileName);
+            string zipFileOutput = "F:/SAUGUMO TEST CHAMBER4/Area51.zip";
+            string directoryZip = @"F:\SAUGUMO TEST CHAMBER4\PasswordSystemFiles\";
+            ZipFile.CreateFromDirectory(directoryZip, zipFileOutput);
+            FileInfo file = new FileInfo(zipFileOutput);
+            DirectoryInfo directoryInfo = new DirectoryInfo(directoryZip);
+            foreach(FileInfo fileInfo in directoryInfo.GetFiles())
+            {
+                File.Delete(fileInfo.FullName);
+            }
+            Directory.Delete("F:/SAUGUMO TEST CHAMBER4/PasswordSystemFiles");
+            
             aesEcnryption.FileEncryption(file);          
         }
     }

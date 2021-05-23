@@ -29,9 +29,9 @@ namespace PasswordSystem
                 RegistratrionFormConstruct registratrionFormConstruct = new RegistratrionFormConstruct(nameBox.Text, passwordBox.Text, applicationBox.Text, commentBox.Text);
                 AesEcnryption ecnryption = new AesEcnryption();
                 registratrionFormConstruct.password = ecnryption.PasswordEncryption(registratrionFormConstruct.password);
-                MessageBox.Show($"encrypted :{registratrionFormConstruct.password}");
+               // MessageBox.Show($"encrypted :{registratrionFormConstruct.password}");
               //  ecnryption.PasswordDecryption(Convert.FromBase64String(registratrionFormConstruct.password));
-                MessageBox.Show($"Decrypted :{ecnryption.PasswordDecryption(Convert.FromBase64String(registratrionFormConstruct.password))}");
+             //   MessageBox.Show($"Decrypted :{ecnryption.PasswordDecryption(Convert.FromBase64String(registratrionFormConstruct.password))}");
                 Argon2 argon2 = new Argon2();
                 registratrionFormConstruct = argon2.PassowrdHashing(registratrionFormConstruct);
                 FileSystemUtility fileSystemUtility = new FileSystemUtility();

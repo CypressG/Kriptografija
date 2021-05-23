@@ -32,7 +32,7 @@ namespace PasswordSystem.Backend.Repository
             argon2.Iterations = 4;
             argon2.MemorySize = 1024;
             string hash = Convert.ToBase64String(argon2.GetBytes(16));
-            MessageBox.Show(hash);
+           // MessageBox.Show(hash);
             return hash;
         }
 
